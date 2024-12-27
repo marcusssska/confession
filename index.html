@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confession Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+            overflow: hidden;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            background: #f9f9f9;
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        textarea:focus {
+            border-color: #ff6f61;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            background: #f9f9f9;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        select:focus {
+            border-color: #ff6f61;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff6f61, #ff9a9e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+        .confessions {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        .confession {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #333;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Confession Page</h1>
+        <textarea id="confessionInput" placeholder="Pour your heart out..."></textarea>
+        <select id="recipientSelect">
+            <option value="">Select Recipient</option>
+            <option value="Friend">Friend</option>
+            <option value="Family">Family</option>
+            <option value="Coworker">Coworker</option>
+            <option value="Anonymous">Anonymous</option>
+        </select>
+        <button id="submitConfession">Submit Confession</button>
+        <div class="confessions" id="confessions"></div>
+    </div>
+
+    <script>
+        const confessionInput = document.getElementById('confessionInput');
+        const recipientSelect = document.getElementById('recipientSelect');
+        const submitConfession = document.getElementById('submitConfession');
+        const confessionsContainer = document.getElementById('confessions');
+
+        submitConfession.addEventListener('click', () => {
+            const confessionText = confessionInput.value.trim();
+            const recipient = recipientSelect.value;
+
+            if (confessionText && recipient) {
+                const confessionElement = document.createElement('div');
+                confessionElement.classList.add('confession');
+                confessionElement.innerHTML = `<strong>To: ${recipient}</strong><br>${confessionText}`;
+
+                confessionsContainer.appendChild(confessionElement);
+                confessionInput.value = '';
+                recipientSelect.value = '';
+
+                // Scroll to the latest confession
+                confessionsContainer.scrollTop = confessionsContainer.scrollHeight;
+            } else {
+                alert('Please write something and select a recipient before submitting.');
+            }
+        });
+    </script>
+</body>
+</html>
